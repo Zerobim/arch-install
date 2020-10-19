@@ -52,5 +52,30 @@ Currently working in:
 - [X] Allow overrides on custom file
 - [ ] Install dhcp client before first reboot
 - [ ] Finish a desktop environment installation
+  + [ ] TAB completion for bash
   + [ ] Add groups to created user
+  + [ ] Install Xorg
+  + [ ] Install Intel/nvidia drivers
+  + [ ] Install DE / WM
+  + [ ] Install and configure ~xdg-user-dirs~
+  + [ ] Install pulseaudio
+  + [ ] Configure keyboard layout
+    - [ ] In console. Already DONE?
+    - [ ] In Xorg
+  + [ ] Install ~mlocate~
+  + [ ] Install CUPS
+
+- [ ] Configure extra software
+  + [ ] Fonts
+  + [ ] ZSH
+
 - [ ] Test everything
+
+- Maybe later
+  + [ ] ACPI events
+  + [ ] CPU frequency scaling
+  + [ ] Laptops
+  + [ ] Suspend and hibernate
+  + [ ] DNSSec enabled resolver
+  + [ ] Firewall
+  + [ ] Install Touchpad drivers
