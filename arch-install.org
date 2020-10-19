@@ -1,0 +1,527 @@
+#+TITLE: Instructions for new arch installation
+
+* Install process
+** Install script
+#+BEGIN_SRC shell :tangle install.sh :shebang "#!/bin/bash"
+out_file='install.out'
+err_file='install.err'
+
+./run_in_live.sh 2>"$err_file" | tee "$out_file"
+
+#+END_SRC
+
+** Configure live iso
+*** Common config
+**** Run
+#+BEGIN_SRC shell :tangle custom.sh
+set -exu
+#+END_SRC
+
+**** Explanation
+~-e~: Fail when anything fails.
+~-x~: Print commands as they are executing.
+~-u~: Unset variables are errors.
+
+*** Source config
+#+BEGIN_SRC shell :tangle run_in_live.sh :shebang "#!/bin/bash"
+# Source configuration variables
+. ./custom.sh
+#+END_SRC
+*** Remove beeps
+#+BEGIN_SRC shell :tangle run_in_live.sh
+# Remove module so no beeps
+rmmod pcspkr || echo 'No beeps removed'
+#+END_SRC
+*** Keyboard
+**** Run
+#+BEGIN_SRC shell :tangle run_in_live.sh
+# Load keyboard configuration.
+loadkeys es
+#+END_SRC
+
+**** Debug
+- List available keyboards: ~ls /usr/share/kbd/keymaps/**/*.map.gz~
+- Change console font: ~setfont~. Fonts located in ~/usr/share/kbd/consolefonts~.
+
+*** Verify boot mode
+**** Run
+#+BEGIN_SRC shell :tangle run_in_live.sh
+# Detect boot mode
+boot_mode=$(ls /sys/firmware/efi/efivars 1>/dev/null && printf 'UEFI' || printf 'BIOS')
+printf 'Boot mode is %s\n' "$boot_mode"
+
+# Utilities
+boot_mode_is_bios(){
+    return [ "$boot_mode" = "BIOS" ]
+}
+boot_mode_is_uefi(){
+    return [ "$boot_mode" = "UEFI" ]
+}
+#+END_SRC
+
+**** Explanation
+If ~/sys/firmware/efi/efivars~ exists, boot mode is UEFI, else its BIOS or CSM.
+
+UEFI requires a special partition to be able to boot the system.
+
+The installer image should try to boot in EFI mode first. Maybe?.
+
+*** Verify network connectivity
+**** Run
+#+BEGIN_SRC shell :tangle run_in_live.sh
+# Check ip is set
+ip a
+# Connectivity check
+ping -c 1 archlinux.org
+#+END_SRC
+**** Explanation
+Required to be able to download and install packages.
+
+**** TODO Separate between wired and wireless
+**** TODO Verify it does not fail
+*** Update system clock
+**** Run
+#+BEGIN_SRC shell :tangle run_in_live.sh
+# Use timedatectl to ensure the system clock is accurate
+timedatectl set-ntp true
+# Check the service status
+timedatectl status
+#+END_SRC
+
+**** Explanation
+This is important for downloading packages. Maybe?.
+
+** Install base system
+*** Partition the disks
+**** Run
+#+BEGIN_SRC shell :tangle custom.sh
+partition_scheme='partitions.sfdisk.in'
+system_device='/dev/sda'
+system_device_backup='partition_table.bak'
+swap_partition="$system_device"1
+system_partition="$system_device"2
+
+# Partition info
+# ONLY GPT HERE RIGHT NOW
+system_scheme_label='gpt'
+# Boot partition
+system_scheme_boot_size='200M'
+system_scheme_boot_type='21686148-6449-6E6F-744E-656564454649'
+system_scheme_boot_extra=',bootable'
+# Should base this on 1.5 * RAM
+system_scheme_swap_size='16G'
+system_scheme_swap_type='S'
+system_scheme_swap_extra=''
+# Last partition uses rest of space
+system_scheme_last_type='L'
+system_scheme_last_extra=''
+#+END_SRC
+
+#+BEGIN_SRC shell :tangle run_in_live.sh
+# !!!!!!!!!!! WARNING !!!!!!!!!!!!!
+# !! Only works with BIOS/GPT  !!!!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# Backup $system_device
+sfdisk --dump "$system_device" >"$system_device_backup"$(date -I'ns')
+# Restore with:
+# sfdisk "$system_device" <"$system_device_backup"
+
+# Partition disks
+echo "label: $system_scheme_label" >"$partition_scheme"
+echo '' >>"$partition_scheme"
+printf "size=%s,type=%s%s\n" \
+    "$system_scheme_boot_size" \
+    "$system_scheme_boot_type" \
+    "$system_scheme_boot_extra" \
+    >>"$partition_scheme"
+
+printf "size=%s,type=%s%s\n" \
+    "$system_scheme_swap_size" \
+    "$system_scheme_swap_type" \
+    "$system_scheme_swap_extra" \
+    >>"$partition_scheme"
+
+printf "type=%s%s\n" \
+    "$system_scheme_last_type" \
+    "$system_scheme_last_extra" \
+    >>"$partition_scheme"
+
+sfdisk "$system_device" <"$partition_scheme"
+
+#+END_SRC
+
+**** Explanation
+~fdisk <device>~
+~cfdisk <device>~ is a curses version, more comfortable.
+***** Required
+- If boot mode is UEFI, a EFI system partition in ~/efi~ or
+  ~/boot~.
+  - ~/boot~: *Required for LVM, RAID, encryption, and BIOS/GPT*.
+    Each kernel is \~30MB, but ~kernel-debug~ packages use more
+    space. Too small might require manual resize or manually
+    deleting old kernels. A suggested size for ~/boot~ is 200 MiB
+    unless you are using EFI system partition as ~/boot~, in
+    which case at least 260 MiB is recommended.
+
+    *Recommendation*: Only on live systems (not VMs). Always the
+    first partition. Server: 1GB. PC: 300MB-500MB.
+
+    *NOTE*: DOS partition on GPT disk might be limited to 1MiB
+    due to bug.
+
+    Select type as ~BIOS boot~ on ~fdisk~.
+
+    Set partition type as bios_boot on parted: ~parted
+    /dev/disk set partition-number bios_grub on~
+
+    BIOS/GPT: This partition can be in any position order but
+    has to be on the first 2 TiB of the disk. This partition
+    needs to be created before GRUB installation.
+
+- Swap ( at least the amount of RAM. Min 512MiB ). Can use file
+  but *partition allows to hibernate* the system. With Linux
+  >2.6, partition and *static* file have the same speed.
+  *Recommendation*: Partition. 1.5*RAM.
+
+- A ~/~ partition
+
+***** Optional
+- If boot mode is BIOS, a ~/boot~ partition helps manage grub and
+  different kernels for multiple linux installations.
+- ~/home~ would allow you to take your environment elsewhere.
+**** TODO Take into account BIOS and UEFI
+**** TODO Parameterize partition info input
+**** TODO Calculate Swap from RAM
+*** Format partitions
+**** Run
+#+BEGIN_SRC shell :tangle run_in_live.sh
+mkswap "$swap_partition"
+mkfs.ext4 "$system_partition"
+#+END_SRC
+**** Explanation
+Create the file system structure: ~mkfs.<fstype>~.
+For swap:
+~mkswap <dev>~
+*** Mount partitions
+**** Run
+#+BEGIN_SRC shell :tangle custom.sh
+system_mp='/mnt'
+#+END_SRC
+
+#+BEGIN_SRC shell :tangle run_in_live.sh
+# Enable swap
+swapoff "$swap_partition" || swapon "$swap_partition"
+# Mount system
+umount "$system_mp" || mount "$system_partition" "$system_mp"
+#+END_SRC
+
+**** Explanation
+Enable swap: ~swapon <dev>~.
+Create mount points (~/boot~, ~/efi~, ...) on ~/mnt~. and mount on ~/mnt~ the
+root partition.
+
+~mount <device> <mountpoint>~
+
+Use ~-t <type>~ if there are problems autodetecting the filetype.
+
+*** Install packages
+**** Run
+
+#+BEGIN_SRC shell :tangle custom.sh
+# Required packages for the system to work
+pacstrap_pkgs='base linux linux-firmware'
+
+# Packages to instal once the system is working
+# Man and info
+user_pkgs='man-db man-pages texinfo'
+# Windows file system drivers
+user_pkgs="$user_pkgs ntfs-3g"
+# Bootloader - GRUB
+user_pkgs="$user_pkgs grub os-prober"
+# Processor ucode updates
+# !!! SELECT ONE OF THIS TWO !!!!
+# TODO automatically select this
+#user_pkgs="$user_pkgs amd-ucode"
+user_pkgs="$user_pkgs intel-ucode"
+# Vim
+user_pkgs="$user_pkgs vim"
+# TODO Networking
+user_pkgs="$user_pkgs"
+#+END_SRC
+
+#+BEGIN_SRC shell :tangle run_in_live.sh
+# Install required packages
+pacstrap "$system_mp" $pacstrap_pkgs
+#+END_SRC
+
+**** Explanation
+1. Configure mirrors on ~/etc/pacman.d/mirrorlist~. Default order
+   is based on sync status and speed. This file will be copied
+   to the system.
+2. Install required packages with ~pacstrap~.
+   - ~pacstrap /mnt <package1> <package2>…~
+   - Required packages: ~base linux linux-firmware~
+   - Recommended packages: ~man-db man-pages texinfo~
+
+Use ~pacstrap~ to install packages from the live system. Alternatively use ~pacman~
+while chrooted( use ~arch-chroot /mnt~ ).
+
+To Consider:
+- Userspace utilities for the management of file systems that will be
+  used on the system.
+- Utilities for accessing RAID or LVM partitions.
+- Specific firmware for other devices not included in linux-firmware.
+- Software necessary for networking.
+- A text editor.
+
+** Configure system
+*** From live system
+**** Run
+#+BEGIN_SRC shell :tangle run_in_live.sh
+# Generate fstab from live environment
+genfstab -U /mnt >> /mnt/etc/fstab
+#+END_SRC
+
+**** Explanation
+Generate fstab file and put it in place for the new system.
+
+*** Enter the new system
+**** Run
+#+BEGIN_SRC shell :tangle run_in_live.sh
+# Copy script to new system
+cp custom.sh run_in_system.sh /mnt/root/
+# Enter system and run script
+arch-chroot /mnt /root/run_in_system.sh
+#+END_SRC
+
+**** Explanation
+Run the installation file in the new system.
+
+*** Source config
+#+BEGIN_SRC shell :tangle run_in_system.sh :shebang "#!/bin/bash"
+# Source configuration variables
+. ./custom.sh
+#+END_SRC
+
+*** Set timezone
+**** Run
+#+BEGIN_SRC shell :tangle custom.sh
+# Set timezone in format 'Region/City'
+timezone='Europe/Madrid'
+#+END_SRC
+
+#+BEGIN_SRC shell :tangle run_in_system.sh
+# Set timezone
+ln -sf /usr/share/zoneinfo/"$timezone" /etc/localtime
+#+END_SRC
+
+**** Explanation
+Available timezones are located in ~/usr/share/zoneinfo/<Region>/<City>~.
+Enabled timezone should be located in ~/etc/localtime~.
+
+*** Set hardware clock
+**** Run
+#+BEGIN_SRC shell :tangle run_in_system.sh
+# Sync HW clock
+hwclock --systohc
+#+END_SRC
+
+**** Explanation
+Set ~/etc/adjtime~ with ~hwclock~. This assumes that the clock is set to UTC.
+***** TODO What is this for?
+
+*** Set locale
+**** Run
+#+BEGIN_SRC shell :tangle custom.sh
+# Part of regex, escape characters
+locale_list='es_ES\.UTF-8 en_US\.UTF-8'
+# Not part of regex
+locale_selected='es_ES.UTF-8'
+#+END_SRC
+
+#+BEGIN_SRC shell :tangle run_in_system.sh
+# Set locale
+uncomment_locales(){
+    local locale_list="$@"
+    local locale_list_regexp=''
+    local locale_list_regexp_separator=''
+
+    for i_locale in $locale_list;
+    do
+        locale_list_regexp="$locale_list_regexp""$locale_list_regexp_separator"
+        locale_list_regexp_separator='\|'
+
+        locale_list_regexp="$locale_list_regexp""\($i_locale.*\)"
+    done
+
+    locale_regexp=$(printf 's/#\(%s\)$/\1/' "$locale_list_regexp"  )
+
+    sed -i "$locale_regexp" /etc/locale.gen
+}
+
+uncomment_locales "$locale_list"
+locale-gen
+
+echo "LANG=$locale_selected" >/etc/locale.conf
+# This works only for systemd
+localectl set-locale "$locale_selected"
+#+END_SRC
+
+**** Explanation
+Uncomment desired locales on ~/etc/locale.gen~.
+Generate them with: ~locale-gen~
+
+Create the ~/etc/locale.conf~ file, and set the LANG variable accordingly.
+~LANG=es_ES.UTF-8~.
+With ~systemd~ you can just do ~localectl set-locale es_ES.UTF-8~.
+
+*** Set vconsole keymap
+**** Run
+#+BEGIN_SRC shell :tangle custom.sh
+# Same as in loadkeys
+vconsole_keymap='es'
+#+END_SRC
+
+#+BEGIN_SRC shell :tangle run_in_system.sh
+# Set vconsole keymap
+echo "KEYMAP=$vconsole_keymap" >/etc/vconsole.conf
+#+END_SRC
+
+**** Explanation
+Make console keyboard persistent on ~/etc/vconsole.conf~. Maybe fonts too?.
+~KEYMAP=es~.
+Systemd only: ~localectl set-keymap es es~.
+
+*** Set root password
+**** Run
+#+BEGIN_SRC shell :tangle custom.sh
+# Plain text root password
+root_passwd='1234'
+#+END_SRC
+
+#+BEGIN_SRC shell :tangle run_in_system.sh
+# Change root password
+printf 'root:%s\n' "$root_passwd" |\
+    chpasswd
+#+END_SRC
+
+**** Explanation
+Set root password: ~passwd~. Default: ~1234~.
+
+Complete the rest of sections, exit chroot and reboot. Optionally
+manually unmount everything to detect problems. Remember to remove
+installation media.
+
+**** TODO Secure password
+
+*** Basic network
+**** Set host name
+***** Run
+#+BEGIN_SRC shell :tangle custom.sh
+# Only hostname
+host_name='mypc'
+#+END_SRC
+
+#+BEGIN_SRC shell :tangle run_in_system.sh
+# Set hostname
+echo "$host_name" >/etc/hostname
+#+END_SRC
+
+***** Explanation
+Create ~/etc/hostname~ with the local name of the machine. Ex: ~arch-vm~.
+
+**** Set hosts file
+***** Run
+#+BEGIN_SRC shell :tangle custom.sh
+# Only domain name
+domain_name='localdomain'
+# '127.0.1.1' or externally visible IP
+external_ip='127.0.1.1'
+#+END_SRC
+
+#+BEGIN_SRC shell :tangle run_in_system.sh
+# Build hosts file
+cat <<EOF >/etc/hosts
+127.0.0.1     localhost
+::1           localhost
+$external_ip  $host_name.$domain_name  $host_name
+EOF
+#+END_SRC
+
+***** Explanation
+Create hosts file and fill it.
+
+Substitute ~127.0.1.1~ with the hosts permanent IP if it has one.
+
+** Software configuration
+*** Install packages
+**** Run
+#+BEGIN_SRC shell :tangle run_in_system.sh
+pacman -Syu $user_pkgs
+#+END_SRC
+**** TODO Explanation
+*** Setup boot loader(GRUB) and microcode updates
+**** Run
+#+BEGIN_SRC shell :tangle run_in_system.sh
+# MBR/GPT only
+grub-install --target=i386-pc "$system_device"
+# Configure
+# TODO Remove this if it works on /boot/grub/custom.cfg
+# TODO This also. Works on /etc/grub.d/40_custom
+cat <<EOF >>/boot/grub/custom.cfg
+menuentry "Shutdown" {
+	echo "Powering off..."
+	halt
+}
+
+menuentry "Reboot" {
+	echo "Rebooting..."
+	reboot
+}
+EOF
+
+grub-mkconfig -o /boot/grub/grub.cfg
+#+END_SRC
+
+**** Explanation
+Install grub on the beginning of the selected disk.
+
+To configure custom entries, they can be appended to
+~/etc/grub.d/40_custom~ (Requires reload on changes) or put in
+~/boot/grub/custom.cfg~ (Does not require reload).
+
+~/etc/grub.d/40_custom~ can be used as a template to create
+~/etc/grub.d/nn_custom~, where ~nn~ defines the precedence,
+indicating the order the script is executed. The order scripts
+are executed determine the placement in the GRUB boot menu. ~nn~
+should be greater than ~06~ to ensure necessary scripts are
+executed first.
+
+~os-prober~ may need ~ntfs-3g~ to detect Windows.
+
+***** Add kernel arguments
+Set the ~GRUB_CMDLINE_LINUX~ + ~GRUB_CMDLINE_LINUX_DEFAULT~
+variables in ~/etc/default/grub~. The two are appended to each
+other and passed to kernel when generating regular boot
+entries. For the recovery boot entry, only ~GRUB_CMDLINE_LINUX~
+is used in the generation.
+
+***** GRUB detects automatically microcode updates
+Just install ~amd-ucode~ or ~intel-ucode~.
+
+Check if it has been updated with ~dmesg | grep microcode~. Look
+for ~microcode updated early to revision 0x1b, date =
+2014-05-29~. And only ~microcode: CPU0 sig=0x306a9, pf=0x2,
+revision=0x1b~ when there are no updates. Also ~microcode:
+Microcode Update Driver: v2.2~.
+
+**** TODO UEFI instructions
+**** TODO Check architecture?
+*** Probably not required
+For LVM, system encryption or RAID, modify ~/etc/mkinitcpio.conf~ and recreate the initramfs image.
+~mkinitcpio -P~
+
+** Post reboot
+*** Network
+**** TODO Complete the rest of the network configuration.

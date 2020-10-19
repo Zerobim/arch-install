@@ -1,0 +1,38 @@
+#+TITLE: An example of arch linux installation
+
+* Status
+Working on it, BUGS BE HERE!!!
+
+* Purpose
+This repository contains a script that allows to install Arch linux on a new
+machine, with all the configuration needed to have a running system.
+
+* How it works
+The file ~arch-install.org~ contains a recopilation of the information in the
+[[https://wiki.archlinux.org/index.php/Installation_guide][arch wiki installation guide]] and maybe other sources in ~org~ format. The code
+snippets this file contains are tangled to generate the required scripts to
+install the system.
+
+- ~custom.sh~: Configuration / customization of the changeable values. You should
+  define the environment you want with these.
+- ~install.sh~: Launch script. Redirects ~stderr~ and ~stdout~ to be able to access
+  the information in case of an error.
+- ~run_in_{live,system}.sh~: Code to run in the live system or the installed
+  system.
+
+* Usage
+- *!!! WARNING !!!* use this at your own risk. YOU WILL LOSE DATA if you run this
+  without understanding what it does. I'm not liable for any damage this causes.
+
+  1. Download this repository.
+  2. Check ~custom.sh~ and adapt the values there to your liking.
+  3. Run ~./install.sh~. Output is stored in ~install.{out,err}~. ~stdout~ is also
+     displayed.
+  4. Check everything is correct and reboot. The system should work.
+
+* Next
+For more info, search for ~TODO~.
+Until 1.0, this is what is done and what is left:
+- [X] Run script
+- [X] General structure
+- [ ] General structure
