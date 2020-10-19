@@ -22,7 +22,7 @@ uncomment_locales(){
         locale_list_regexp="$locale_list_regexp""\($i_locale.*\)"
     done
 
-    locale_regexp=$(printf 's/#\(%s\)$/\1/' "$locale_list_regexp"  )
+    locale_regexp=$(printf 's/#\(%s\)$/\\1/' "$locale_list_regexp"  )
 
     sed -i "$locale_regexp" /etc/locale.gen
 }
@@ -31,8 +31,6 @@ uncomment_locales "$locale_list"
 locale-gen
 
 echo "LANG=$locale_selected" >/etc/locale.conf
-# This works only for systemd
-localectl set-locale "$locale_selected"
 
 # Set vconsole keymap
 echo "KEYMAP=$vconsole_keymap" >/etc/vconsole.conf
@@ -51,7 +49,7 @@ cat <<EOF >/etc/hosts
 $external_ip  $host_name.$domain_name  $host_name
 EOF
 
-pacman -Syu $user_pkgs
+pacman -Syu --noconfirm $user_pkgs
 
 # MBR/GPT only
 grub-install --target=i386-pc "$system_device"
@@ -71,3 +69,5 @@ menuentry "Reboot" {
 EOF
 
 grub-mkconfig -o /boot/grub/grub.cfg
+
+echo 'Finished configuring system'

@@ -1,7 +1,8 @@
 #+TITLE: An example of arch linux installation
 
 * Status
-Working on it, BUGS BE HERE!!!
+It works!!. Options are really limited, though. And it might fail if something
+changes.
 
 * Purpose
 This repository contains a script that allows to install Arch linux on a new
@@ -29,7 +30,7 @@ install the system.
   system.
 
 * Usage
-- *!!! WARNING !!!* use this at your own risk. YOU WILL LOSE DATA if you run this
+- *!!! WARNING !!!* use this at your own risk. *YOU WILL LOSE DATA* if you run this
   without understanding what it does. I'm not liable for any damage this causes.
 - *NOTE* : Scripts may only be up to date in ~master~ branch.
 
@@ -37,13 +38,10 @@ install the system.
   2. Check ~custom.sh~ and adapt the values there to your liking.
   3. Run ~./install.sh~. Output is stored in ~install.{out,err}~. ~stdout~ is also
      displayed.
-  4. Check everything is correct and reboot. The system should work.
+  4. Check everything is correct and ~reboot~. The system should work.
 
 * Next
-For things that might be done, search for ~TODO~.
+For things that might be done in the future, search for ~TODO~.
 
 Currently working in:
-- [X] Run script
-- [X] General structure
-- [X] Variables to customize some things
-- [ ] Make it work
+- [ ] Get a new task batch

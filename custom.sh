@@ -3,8 +3,9 @@ set -exu
 partition_scheme='partitions.sfdisk.in'
 system_device='/dev/sda'
 system_device_backup='partition_table.bak'
-swap_partition="$system_device"1
-system_partition="$system_device"2
+boot_partition="$system_device"1
+swap_partition="$system_device"2
+system_partition="$system_device"3
 
 # Partition info
 # ONLY GPT HERE RIGHT NOW
