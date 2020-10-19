@@ -20,22 +20,24 @@ boot_mode_is_uefi(){
     return [ "$boot_mode" = "UEFI" ]
 }
 
-# Check ip is set
-ip a
 # Connectivity check
-ping -c 1 archlinux.org
+ping -c 1 archlinux.org && echo 'Internet works!!' || echo 'ERROR: Internet does not work!'
 
 # Use timedatectl to ensure the system clock is accurate
 timedatectl set-ntp true
-# Check the service status
-timedatectl status
+
+# TODO remove me when finished
+# Make trying again easier
+swapoff "$swap_partition"
+umount "$system_mp"
 
 # !!!!!!!!!!! WARNING !!!!!!!!!!!!!
 # !! Only works with BIOS/GPT  !!!!
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #
+system_device_backup_full="$system_device_backup"$(date -I'ns')
 # Backup $system_device
-sfdisk --dump "$system_device" >"$system_device_backup"$(date -I'ns')
+sfdisk --dump "$system_device" >"$system_device_backup_full"
 # Restore with:
 # sfdisk "$system_device" <"$system_device_backup"
 
@@ -65,9 +67,9 @@ mkswap "$swap_partition"
 mkfs.ext4 "$system_partition"
 
 # Enable swap
-swapoff "$swap_partition" || swapon "$swap_partition"
+swapon "$swap_partition"
 # Mount system
-umount "$system_mp" || mount "$system_partition" "$system_mp"
+mount "$system_partition" "$system_mp"
 
 # Install required packages
 pacstrap "$system_mp" $pacstrap_pkgs
@@ -76,6 +78,9 @@ pacstrap "$system_mp" $pacstrap_pkgs
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # Copy script to new system
-cp custom.sh run_in_system.sh /mnt/root/
+cp custom.sh run_in_system.sh /mnt/
+
+echo 'Done with live system, entering the new system'
+
 # Enter system and run script
-arch-chroot /mnt /root/run_in_system.sh
+arch-chroot /mnt /run_in_system.sh
