@@ -15,10 +15,15 @@ err_file='install.err'
 **** Run
 #+BEGIN_SRC shell :tangle custom.sh
 set -exu
+
+# File which overrides defaults
+custom_override_file='custom_override.sh'
 #+END_SRC
 
 **** Explanation
-Does not seem to work for some reason...
+This file gets sourced from the live system and from the installed system.
+
+Maybe ~set~ does not work for some reason...
 
 ~-e~: Fail when anything fails.
 ~-x~: Print commands as they are executing.
@@ -288,7 +293,7 @@ To Consider:
 - Software necessary for networking.
 - A text editor.
 
-** Configure system
+** Basic system configuration
 *** From live system
 **** Run
 #+BEGIN_SRC shell :tangle run_in_live.sh
@@ -304,6 +309,10 @@ Generate fstab file and put it in place for the new system.
 #+BEGIN_SRC shell :tangle run_in_live.sh
 # Copy script to new system
 cp custom.sh run_in_system.sh /mnt/
+# Copies default overrides
+[ -r "$custom_override_file" ] && \
+    cp "$custom_override_file" /mnt/ || \
+    echo 'No override of custom values'
 
 echo 'Done with live system, entering the new system'
 
@@ -469,7 +478,27 @@ Create hosts file and fill it.
 
 Substitute ~127.0.1.1~ with the hosts permanent IP if it has one.
 
-** Software configuration
+**** TODO install at least a dhcp client
+
+*** Create unprivileged user
+**** Run
+#+BEGIN_SRC shell :tangle custom.sh
+# New user info
+new_user_name='daniel'
+new_user_password='1234'
+# TODO not yet ready.
+# Comma separated list # new_user_groups='sudo'
+#+END_SRC
+
+#+BEGIN_SRC shell :tangle run_in_system.sh
+# Create a new unprivileged user
+useradd -m "$new_user_name"
+printf '%s:%s\n' "$new_user_name" "$new_user_password" |\
+    chpasswd
+#+END_SRC
+
+**** Explanation
+** System customization
 *** Install packages
 **** Run
 #+BEGIN_SRC shell :tangle run_in_system.sh
@@ -542,6 +571,16 @@ echo 'Finished configuring system'
 *** Probably not required
 For LVM, system encryption or RAID, modify ~/etc/mkinitcpio.conf~ and recreate the initramfs image.
 ~mkinitcpio -P~
+
+*** Add override to custom values
+**** Run
+#+BEGIN_SRC shell :tangle custom.sh
+# Override defaults here
+. ./"$custom_override_file"
+#+END_SRC
+
+**** Explanation
+Override the default values in your own file (~custom_override.sh~).
 
 ** Post reboot
 *** TODO check ucode installed properly

@@ -48,4 +48,9 @@ install the system.
 For things that might be done in the future, search for ~TODO~.
 
 Currently working in:
-- [ ] Get a new task batch
+- [X] Create a non root user.
+- [X] Allow overrides on custom file
+- [ ] Install dhcp client before first reboot
+- [ ] Finish a desktop environment installation
+  + [ ] Add groups to created user
+- [ ] Test everything
