@@ -35,7 +35,10 @@ install the system.
   running any of this scripts.
 - *NOTE* : Scripts may only be up to date in ~master~ branch.
 
-  1. Download this repository.
+  How to use it:
+
+  1. Download this repository. The default arch image might require you to
+     install ~git~.
   2. Check ~custom.sh~ and adapt the values there to your liking.
   3. Run ~./install.sh~. Output is stored in ~install.{out,err}~. ~stdout~ is also
      displayed.
