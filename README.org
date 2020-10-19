@@ -7,6 +7,14 @@ Working on it, BUGS BE HERE!!!
 This repository contains a script that allows to install Arch linux on a new
 machine, with all the configuration needed to have a running system.
 
+Most if not all the information appearing here was taken from the [[https://wiki.archlinux.org/index.php/Installation_guide][arch wiki
+installation guide]], so this is just a reference for me and maybe educational
+purposes.
+
+There may be more or better things like this, but this might serve as reference
+for somebody having problems with the installation, and I think its not a bad
+exercise.
+
 * How it works
 The file ~arch-install.org~ contains a recopilation of the information in the
 [[https://wiki.archlinux.org/index.php/Installation_guide][arch wiki installation guide]] and maybe other sources in ~org~ format. The code
@@ -32,8 +40,10 @@ install the system.
   4. Check everything is correct and reboot. The system should work.
 
 * Next
-For more info, search for ~TODO~.
-Until 1.0, this is what is done and what is left:
+For things that might be done, search for ~TODO~.
+
+Currently working in:
 - [X] Run script
 - [X] General structure
-- [ ] General structure
+- [X] Variables to customize some things
+- [ ] Make it work
