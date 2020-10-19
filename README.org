@@ -31,7 +31,8 @@ install the system.
 
 * Usage
 - *!!! WARNING !!!* use this at your own risk. *YOU WILL LOSE DATA* if you run this
-  without understanding what it does. I'm not liable for any damage this causes.
+  without understanding what it does. I'm not liable for any damage caused by
+  running any of this scripts.
 - *NOTE* : Scripts may only be up to date in ~master~ branch.
 
   1. Download this repository.
