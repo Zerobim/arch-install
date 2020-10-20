@@ -50,7 +50,7 @@ For things that might be done in the future, search for ~TODO~.
 Currently working in:
 - [X] Create a non root user.
 - [X] Allow overrides on custom file
-- [ ] Install dhcp client before first reboot
+- [X] Install dhcp client before first reboot
 - [ ] Finish a desktop environment installation
   + [ ] TAB completion for bash
   + [ ] Add groups to created user

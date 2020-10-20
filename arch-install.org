@@ -249,23 +249,6 @@ Use ~-t <type>~ if there are problems autodetecting the filetype.
 #+BEGIN_SRC shell :tangle custom.sh
 # Required packages for the system to work
 pacstrap_pkgs='base linux linux-firmware'
-
-# Packages to instal once the system is working
-# Man and info
-user_pkgs='man-db man-pages texinfo'
-# Windows file system drivers
-user_pkgs="$user_pkgs ntfs-3g"
-# Bootloader - GRUB
-user_pkgs="$user_pkgs grub os-prober"
-# Processor ucode updates
-# !!! SELECT ONE OF THIS TWO !!!!
-# TODO automatically select this
-#user_pkgs="$user_pkgs amd-ucode"
-user_pkgs="$user_pkgs intel-ucode"
-# Vim
-user_pkgs="$user_pkgs vim"
-# TODO Networking
-user_pkgs="$user_pkgs"
 #+END_SRC
 
 #+BEGIN_SRC shell :tangle run_in_live.sh
@@ -501,6 +484,26 @@ printf '%s:%s\n' "$new_user_name" "$new_user_password" |\
 ** System customization
 *** Install packages
 **** Run
+#+BEGIN_SRC shell :tangle custom.sh
+# Packages to install once the system is working
+# Man and info
+user_pkgs='man-db man-pages texinfo'
+# Windows file system drivers
+user_pkgs="$user_pkgs ntfs-3g"
+# Bootloader - GRUB
+user_pkgs="$user_pkgs grub os-prober"
+# Processor ucode updates
+# !!! SELECT ONE OF THIS TWO !!!!
+# TODO automatically select this
+#user_pkgs="$user_pkgs amd-ucode"
+user_pkgs="$user_pkgs intel-ucode"
+# Vim
+user_pkgs="$user_pkgs vim"
+# Networking
+# Network Manager is kind of overkill, but it works.
+user_pkgs="$user_pkgs networkmanager"
+#+END_SRC
+
 #+BEGIN_SRC shell :tangle run_in_system.sh
 pacman -Syu --noconfirm $user_pkgs
 #+END_SRC
