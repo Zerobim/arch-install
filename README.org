@@ -83,9 +83,9 @@ Currently working in:
   + [-] Install DE / WM
     - [X] Install i3-wm, i3blocks, i3status
     - [X] Install xterm as fallback terminal
-    - [ ] Test it starts after installing xinit and xterm
+    - [ ] Test it starts after installing xinit
   + [-] Install a display manager
-    - [X] Install lightdm
+    - [X] Install lightdm with the default theme
     - [ ] Test can choose i3 session
   + [ ] Install and configure ~xdg-user-dirs~
   + [ ] Install pulseaudio
@@ -114,6 +114,7 @@ Currently working in:
     - [ ] I3
     - [ ] I3blocks
     - [ ] Alacritty
+  + [ ] Configure lightdm to work with webkit-theme-litarvan
 
 
 - Maybe later
