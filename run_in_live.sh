@@ -26,11 +26,6 @@ ping -c 1 archlinux.org && echo 'Internet works!!' || echo 'ERROR: Internet does
 # Use timedatectl to ensure the system clock is accurate
 timedatectl set-ntp true
 
-# TODO remove me when finished
-# Make trying again easier
-swapoff "$swap_partition"
-umount "$system_mp"
-
 # !!!!!!!!!!! WARNING !!!!!!!!!!!!!
 # !! Only works with BIOS/GPT  !!!!
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

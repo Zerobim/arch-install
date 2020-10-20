@@ -88,4 +88,6 @@ user_pkgs="$user_pkgs bash-completion"
 user_pkgs="$user_pkgs sudo"
 
 # Override defaults here
-. ./"$custom_override_file"
+[ -r ./"$custom_override_file" ] && \
+    . ./"$custom_override_file" || \
+    echo "Didn't find customization file $custom_override_file"
