@@ -503,9 +503,40 @@ user_pkgs="$user_pkgs sudo"
 # Xorg
 user_pkgs="$user_pkgs xorg"
 
+# Select nvidia driver from official repos. Only used if the card is from
+# nvidia.
+nvidia_driver='nvidia'
+
+#+END_SRC
+
+Graphics driver.
+#+BEGIN_SRC shell :tangle run_in_system.sh
+get_graphics_driver_pkgs(){
+    graphics_card=$(lspci | grep -e VGA -e 2D -e 3D)
+
+    $(echo "$graphics_card" | grep -q -e 'Intel') && \
+        printf 'xf86-video-intel '
+
+    $(echo "$graphics_card" | grep -q -e 'NVIDIA') && \
+        printf "$nvidia_driver "
+
+    # !!!!!! Not tested!!!!
+    $(echo "$graphics_card" | grep -q -e 'ATI') && \
+        printf 'xf86-video-ati '
+
+    # !!!!!! Not tested!!!!
+    $(echo "$graphics_card" | grep -q -e 'AMD') && \
+        printf 'xf86-video-amdgpu '
+}
+
 #+END_SRC
 
 #+BEGIN_SRC shell :tangle run_in_system.sh
+# Add graphics driver
+graphics_driver=$(get_graphics_driver_pkgs)
+user_pkgs="$user_pkgs $graphics_driver"
+
+# Install packages
 pacman -Syu --noconfirm $user_pkgs
 #+END_SRC
 

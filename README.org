@@ -76,7 +76,10 @@ Currently working in:
   + [-] Install Xorg
     - [X] Add package to the install list
     - [ ] Tested running i3
-  + [ ] Install Intel/nvidia drivers
+  + [-] Install Intel/nvidia drivers
+    - [X] Detect which one should be installed
+    - [X] Add package to list
+    - [ ] Test they are added to the package list
   + [ ] Install DE / WM
   + [ ] Install and configure ~xdg-user-dirs~
   + [ ] Install pulseaudio
