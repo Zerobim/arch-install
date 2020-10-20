@@ -85,7 +85,7 @@ Currently working in:
     - [X] Install xterm as fallback terminal
     - [ ] Test it starts after installing xinit and xterm
   + [-] Install a display manager
-    - [X] Install sddm
+    - [X] Install lightdm
     - [ ] Test can choose i3 session
   + [ ] Install and configure ~xdg-user-dirs~
   + [ ] Install pulseaudio

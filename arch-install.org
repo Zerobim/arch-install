@@ -514,7 +514,7 @@ user_pkgs="$user_pkgs xterm"
 user_pkgs="$user_pkgs i3-wm i3blocks i3status"
 
 # Display manager
-user_pkgs="$user_pkgs sddm"
+user_pkgs="$user_pkgs lightdm"
 
 # File finder
 user_pkgs="$user_pkgs mlocate"
@@ -592,7 +592,7 @@ error, I find this extremely annoying.
 **** Run
 #+BEGIN_SRC shell :tangle run_in_system.sh
 systemctl enable NetworkManager
-systemctl enable sddm
+systemctl enable lightdm
 #+END_SRC
 
 **** Explanation
