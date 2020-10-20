@@ -23,8 +23,6 @@ custom_override_file='custom_override.sh'
 **** Explanation
 This file gets sourced from the live system and from the installed system.
 
-Maybe ~set~ does not work for some reason...
-
 ~-e~: Fail when anything fails.
 ~-x~: Print commands as they are executing.
 ~-u~: Unset variables are errors.
@@ -127,10 +125,6 @@ system_scheme_last_extra=''
 #+END_SRC
 
 #+BEGIN_SRC shell :tangle run_in_live.sh
-# TODO remove me when finished
-# Make trying again easier
-swapoff "$swap_partition"
-umount "$system_mp"
 
 # !!!!!!!!!!! WARNING !!!!!!!!!!!!!
 # !! Only works with BIOS/GPT  !!!!

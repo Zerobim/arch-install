@@ -48,6 +48,7 @@ install the system.
 For things that might be done in the future, search for ~TODO~.
 
 Currently working in:
+- [X] Tested ~set~ works.
 - [-] Create a non root user.
   + [X] Create a new user.
   + [ ] Test user is created after reboot
