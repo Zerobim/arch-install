@@ -49,7 +49,9 @@ For things that might be done in the future, search for ~TODO~.
 
 Currently working in:
 - [X] Create a non root user.
-- [X] Allow overrides on custom file
+- [-] Allow to override values from ~custom.sh~
+  + [X] Source ~override_custom.sh~ at the end of ~custom.sh~
+  + [ ] Tested
 - [-] Cabled internet works after reboot
   + [X] Install dhcp client
   + [ ] Tested
@@ -74,10 +76,13 @@ Currently working in:
 - [ ] Everything is tested
 
 - Must do
-  + [ ] Wireless network connection
   + [ ] Check micro-code installed properly after first reboot
   + [ ] Store password in encrypted format
-   
+  + [ ] Rename ~custom.sh~ to ~defaults.sh~ and ~override_custom.sh~ to ~custom.sh~.
+  + [ ] Stop if network check fails
+  + [ ] Allow to specify partitioning scheme file for ~sfdisk~.
+  + [ ] Calculate Swap from RAM
+
 - Maybe later
   + [ ] ACPI events
   + [ ] CPU frequency scaling
@@ -92,3 +97,6 @@ Currently working in:
   + [ ] Configure extra software
     - [ ] Fonts
     - [ ] ZSH
+  + [ ] Simplify partition handling
+  + [ ] Separate instructions for BIOS and UEFI partitioning
+  + [ ] Instructions to connect to a wireless network from the live system.
