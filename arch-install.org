@@ -507,7 +507,10 @@ user_pkgs="$user_pkgs networkmanager"
 #+BEGIN_SRC shell :tangle run_in_system.sh
 pacman -Syu --noconfirm $user_pkgs
 #+END_SRC
-**** TODO Explanation
+
+**** Explanation
+Install all the packages you want in the system. Add them to ~$user_pkgs~.
+
 *** Enable services
 **** Run
 #+BEGIN_SRC shell :tangle run_in_system.sh
