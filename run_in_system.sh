@@ -55,21 +55,24 @@ printf '%s:%s\n' "$new_user_name" "$new_user_password" |\
     chpasswd
 
 get_graphics_driver_pkgs(){
-    graphics_card=$(lspci | grep -e VGA -e 2D -e 3D)
+    local graphics_card=$(lspci | grep -e VGA -e 2D -e 3D)
+    local driver=''
 
     $(echo "$graphics_card" | grep -q -e 'Intel') && \
-        printf 'xf86-video-intel '
+        driver='xf86-video-intel'
 
     $(echo "$graphics_card" | grep -q -e 'NVIDIA') && \
-        printf "$nvidia_driver "
+        driver="$driver" "$nvidia_driver"
 
     # !!!!!! Not tested!!!!
     $(echo "$graphics_card" | grep -q -e 'ATI') && \
-        printf 'xf86-video-ati '
+        driver="$driver" 'xf86-video-ati'
 
     # !!!!!! Not tested!!!!
     $(echo "$graphics_card" | grep -q -e 'AMD') && \
-        printf 'xf86-video-amdgpu '
+        driver="$driver" 'xf86-video-amdgpu'
+
+    printf '%s' "$driver"
 }
 
 # Add graphics driver
