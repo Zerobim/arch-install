@@ -75,12 +75,16 @@ mount "$system_partition" "$system_mp"
 pacstrap "$system_mp" $pacstrap_pkgs
 
 # Generate fstab from live environment
-genfstab -U /mnt >> /mnt/etc/fstab
+genfstab -U "$system_mp" >> "$system_mp"/etc/fstab
 
 # Copy script to new system
-cp custom.sh run_in_system.sh /mnt/
+cp custom.sh run_in_system.sh "$system_mp"/
+# Copies default overrides
+[ -r "$custom_override_file" ] && \
+    cp "$custom_override_file" "$system_mp"/ || \
+    echo 'No override of custom values'
 
 echo 'Done with live system, entering the new system'
 
 # Enter system and run script
-arch-chroot /mnt /run_in_system.sh
+arch-chroot "$system_mp" /run_in_system.sh

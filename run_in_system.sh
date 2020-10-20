@@ -49,13 +49,31 @@ cat <<EOF >/etc/hosts
 $external_ip  $host_name.$domain_name  $host_name
 EOF
 
+# Create a new unprivileged user
+useradd -m "$new_user_name"
+printf '%s:%s\n' "$new_user_name" "$new_user_password" |\
+    chpasswd
+
 pacman -Syu --noconfirm $user_pkgs
+
+### Sudo config ###
+# Adding sudo group config
+echo "Members of group sudo can execute anything with their password" >/etc/sudoers.d/20_sudo_group
+echo "%sudo	ALL=(ALL) ALL" >>/etc/sudoers.d/20_sudo_group
+# Fixing permissions
+chmod 440 /etc/sudoers.d/20_sudo_group
+
+# Creating sudo group
+groupadd sudo
+
+# Adding user to sudo group
+usermod -aG sudo "$new_user_name"
+
+systemctl enable NetworkManager
 
 # MBR/GPT only
 grub-install --target=i386-pc "$system_device"
 # Configure
-# TODO Remove this if it works on /boot/grub/custom.cfg
-# TODO This also. Works on /etc/grub.d/40_custom
 cat <<EOF >>/boot/grub/custom.cfg
 menuentry "Shutdown" {
 	echo "Powering off..."
