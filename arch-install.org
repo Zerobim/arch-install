@@ -476,21 +476,33 @@ Create a regular user with less privileges for regular use.
 **** Run
 #+BEGIN_SRC shell :tangle custom.sh
 # Packages to install once the system is working
+
 # Man and info
 user_pkgs='man-db man-pages texinfo'
+
 # Windows file system drivers
 user_pkgs="$user_pkgs ntfs-3g"
+
 # Bootloader - GRUB
 user_pkgs="$user_pkgs grub os-prober"
+
 # Processor ucode updates
 # !!! SELECT ONE OF THIS TWO !!!!
 #user_pkgs="$user_pkgs amd-ucode"
 user_pkgs="$user_pkgs intel-ucode"
+
 # Vim
 user_pkgs="$user_pkgs vim"
+
 # Networking
 # Network Manager is kind of overkill, but it works.
 user_pkgs="$user_pkgs networkmanager"
+# Graphical goodies for network manager
+user_pkgs="$user_pkgs nm-connection-editor network-manager-applet"
+
+# Bash completion
+user_pkgs="$user_pkgs bash-completion"
+
 #+END_SRC
 
 #+BEGIN_SRC shell :tangle run_in_system.sh

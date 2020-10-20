@@ -55,9 +55,9 @@ Currently working in:
 - [-] Cabled internet works after reboot
   + [X] Install dhcp client
   + [ ] Tested
-- [ ] TAB completion for bash works
-  + [ ] Install TAB completion
-  + [ ] Tested
+- [X] TAB completion for bash works
+  + [X] Install TAB completion
+  + [X] Tested. NOT. Should be read by default.
 - [ ] Finish a desktop environment installation
   + [ ] Sudo is usable after reboot for unprivileged user
     - [ ] Install sudo
