@@ -88,8 +88,6 @@ ping -c 1 archlinux.org && echo 'Internet works!!' || echo 'ERROR: Internet does
 **** Explanation
 Required to be able to download and install packages.
 
-**** TODO Separate between wired and wireless
-**** TODO Verify it does not fail
 *** Update system clock
 **** Run
 #+BEGIN_SRC shell :tangle run_in_live.sh
@@ -207,9 +205,6 @@ sfdisk "$system_device" <"$partition_scheme"
 - If boot mode is BIOS, a ~/boot~ partition helps manage grub and
   different kernels for multiple linux installations.
 - ~/home~ would allow you to take your environment elsewhere.
-**** TODO Take into account BIOS and UEFI
-**** TODO Parameterize partition info input
-**** TODO Calculate Swap from RAM
 *** Format partitions
 **** Run
 #+BEGIN_SRC shell :tangle run_in_live.sh
@@ -337,7 +332,6 @@ hwclock --systohc
 
 **** Explanation
 Set ~/etc/adjtime~ with ~hwclock~. This assumes that the clock is set to UTC.
-***** TODO What is this for?
 
 *** Set locale
 **** Run
@@ -416,11 +410,6 @@ printf 'root:%s\n' "$root_passwd" |\
 **** Explanation
 Set root password: ~passwd~. Default: ~1234~.
 
-Complete the rest of sections, exit chroot and reboot. Optionally
-manually unmount everything to detect problems. Remember to remove
-installation media.
-
-
 *** Basic network
 **** Set host name
 ***** Run
@@ -470,8 +459,6 @@ you will have to configure your connection by hand each time.
 # New user info
 new_user_name='daniel'
 new_user_password='1234'
-# TODO not yet ready.
-# Comma separated list # new_user_groups='sudo'
 #+END_SRC
 
 #+BEGIN_SRC shell :tangle run_in_system.sh
@@ -497,7 +484,6 @@ user_pkgs="$user_pkgs ntfs-3g"
 user_pkgs="$user_pkgs grub os-prober"
 # Processor ucode updates
 # !!! SELECT ONE OF THIS TWO !!!!
-# TODO automatically select this
 #user_pkgs="$user_pkgs amd-ucode"
 user_pkgs="$user_pkgs intel-ucode"
 # Vim
@@ -529,8 +515,6 @@ Enable required services here.
 # MBR/GPT only
 grub-install --target=i386-pc "$system_device"
 # Configure
-# TODO Remove this if it works on /boot/grub/custom.cfg
-# TODO This also. Works on /etc/grub.d/40_custom
 cat <<EOF >>/boot/grub/custom.cfg
 menuentry "Shutdown" {
 	echo "Powering off..."
@@ -578,8 +562,6 @@ for ~microcode updated early to revision 0x1b, date =
 revision=0x1b~ when there are no updates. Also ~microcode:
 Microcode Update Driver: v2.2~.
 
-**** TODO UEFI instructions
-**** TODO Check architecture?
 *** Finish message
 **** Run
 #+BEGIN_SRC shell :tangle run_in_system.sh

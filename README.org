@@ -100,3 +100,11 @@ Currently working in:
   + [ ] Simplify partition handling
   + [ ] Separate instructions for BIOS and UEFI partitioning
   + [ ] Instructions to connect to a wireless network from the live system.
+  + [ ] Auto select required micro code package.
+  + [ ] UEFI instructions for GRUB.
+  + [ ] Check architecture for installing GRUB.
+  + [ ] Change default time for GRUB.
+  + [ ] Fill up explanation about ~hwclock~ properly.
+    - [ ] Why is it needed.
+  + [ ] Create non existing groups
+  + [ ] Add user to group
