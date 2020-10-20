@@ -503,9 +503,21 @@ user_pkgs="$user_pkgs sudo"
 # Xorg
 user_pkgs="$user_pkgs xorg"
 
-# Select nvidia driver from official repos. Only used if the card is from
-# nvidia.
+# Graphics driver Nvidia driver from official repos. Only used if the card is
+# from nvidia.
 nvidia_driver='nvidia'
+
+# Fallback terminal
+user_pkgs="$user_pkgs xterm"
+
+# I3-wm
+user_pkgs="$user_pkgs i3-wm i3blocks i3status"
+
+# Display manager
+user_pkgs="$user_pkgs sddm"
+
+# File finder
+user_pkgs="$user_pkgs mlocate"
 
 #+END_SRC
 
@@ -580,6 +592,7 @@ error, I find this extremely annoying.
 **** Run
 #+BEGIN_SRC shell :tangle run_in_system.sh
 systemctl enable NetworkManager
+systemctl enable sddm
 #+END_SRC
 
 **** Explanation

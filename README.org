@@ -80,23 +80,41 @@ Currently working in:
     - [X] Detect which one should be installed
     - [X] Add package to list
     - [ ] Test they are added to the package list
-  + [ ] Install DE / WM
+  + [-] Install DE / WM
+    - [X] Install i3-wm, i3blocks, i3status
+    - [X] Install xterm as fallback terminal
+    - [ ] Test it starts after installing xinit and xterm
+  + [-] Install a display manager
+    - [X] Install sddm
+    - [ ] Test can choose i3 session
   + [ ] Install and configure ~xdg-user-dirs~
   + [ ] Install pulseaudio
   + [ ] Configure keyboard layout
     - [ ] In console. Already DONE?
     - [ ] In Xorg
-  + [ ] Install ~mlocate~
+  + [X] Install ~mlocate~
   + [ ] Install CUPS
 - [ ] Everything is tested
 
 - Must do
+  + [ ] Install and set default terminal
+    - [ ] Install alacritty
+    - [ ] Install xterm as fallback
+    - [ ] Set $TERMINAL in pam
   + [ ] Check micro-code installed properly after first reboot
   + [ ] Store password in encrypted format
   + [ ] Rename ~custom.sh~ to ~defaults.sh~ and ~override_custom.sh~ to ~custom.sh~.
   + [ ] Stop if network check fails
   + [ ] Allow to specify partitioning scheme file for ~sfdisk~.
   + [ ] Calculate Swap from RAM
+  + [ ] Install fonts
+    - [ ] awesome and fonts with ligatures
+  + [ ] Install dmenu and rofi
+  + [ ] Load custom config
+    - [ ] I3
+    - [ ] I3blocks
+    - [ ] Alacritty
+
 
 - Maybe later
   + [ ] ACPI events
@@ -123,3 +141,7 @@ Currently working in:
     - [ ] Why is it needed.
   + [ ] Create non existing groups
   + [ ] Add user to group
+  + [ ] Check DPMS to turn off monitor
+  + [ ] Check / Install picom
+  + [ ] Check rest of Xorg page
+  + [ ] Check I3 tips and tricks
