@@ -530,6 +530,18 @@ usermod -aG sudo "$new_user_name"
 ***** Explanation
 Using ~/etc/sudoers.d~ because its cleaner.
 
+**** Remove beeping
+***** Run
+#+BEGIN_SRC shell :tangle run_in_system.sh
+### Removing beeping ###
+echo 'blacklist pcspkr' >> /etc/modprobe.d/nobeep.conf
+
+#+END_SRC
+
+***** Explanation
+The module ~pcspkr~ is the one that makes the computer beep when there is an
+error, I find this extremely annoying.
+
 *** Enable services
 **** Run
 #+BEGIN_SRC shell :tangle run_in_system.sh

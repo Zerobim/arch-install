@@ -70,8 +70,8 @@ Currently working in:
     - [X] Add user to ~sudo~ group
     - [X] Test user can ~sudo -l~
     - [X] Test user can ~sudo cat /etc/sudoers~.
-  + [ ] Remove beeping
-    - [ ] Dont load ~pcspkr~ kernel module
+  + [-] Remove beeping
+    - [X] Dont load ~pcspkr~ kernel module
     - [ ] Test pressing left when logged in
   + [ ] Install Xorg
   + [ ] Install Intel/nvidia drivers
