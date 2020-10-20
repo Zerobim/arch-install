@@ -79,3 +79,7 @@ Currently working in:
   + [ ] DNSSec enabled resolver
   + [ ] Firewall
   + [ ] Install Touchpad drivers
+  + [ ] Wireless network connection
+  + [ ] Separate configuration files
+    - [ ] For packages
+    - [ ] For live / system
