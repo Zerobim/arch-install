@@ -503,6 +503,9 @@ user_pkgs="$user_pkgs nm-connection-editor network-manager-applet"
 # Bash completion
 user_pkgs="$user_pkgs bash-completion"
 
+# Sudo
+user_pkgs="$user_pkgs sudo"
+
 #+END_SRC
 
 #+BEGIN_SRC shell :tangle run_in_system.sh
@@ -511,6 +514,27 @@ pacman -Syu --noconfirm $user_pkgs
 
 **** Explanation
 Install all the packages you want in the system. Add them to ~$user_pkgs~.
+
+*** Configure new software
+**** Sudo
+***** Run
+#+BEGIN_SRC shell :tangle run_in_system.sh
+### Sudo config ###
+# Adding sudo group config
+echo "Members of group sudo can execute anything with their password" >/etc/sudoers.d/20_sudo_group
+echo "%sudo	ALL=(ALL) ALL" >>/etc/sudoers.d/20_sudo_group
+# Fixing permissions
+chmod 440 /etc/sudoers.d/20_sudo_group
+
+# Creating sudo group
+groupadd sudo
+
+# Adding user to sudo group
+usermod -aG sudo "$new_user_name"
+#+END_SRC
+
+***** Explanation
+Using ~/etc/sudoers.d~ because its cleaner.
 
 *** Enable services
 **** Run
