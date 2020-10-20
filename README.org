@@ -51,8 +51,8 @@ Currently working in:
 - [X] Create a non root user.
 - [X] Allow overrides on custom file
 - [X] Install dhcp client before first reboot
+- [ ] TAB completion for bash
 - [ ] Finish a desktop environment installation
-  + [ ] TAB completion for bash
   + [ ] Add groups to created user
   + [ ] Install Xorg
   + [ ] Install Intel/nvidia drivers

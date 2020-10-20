@@ -508,6 +508,15 @@ user_pkgs="$user_pkgs networkmanager"
 pacman -Syu --noconfirm $user_pkgs
 #+END_SRC
 **** TODO Explanation
+*** Enable services
+**** Run
+#+BEGIN_SRC shell :tangle run_in_system.sh
+systemctl enable NetworkManager
+#+END_SRC
+
+**** Explanation
+Enable required services here.
+
 *** Setup boot loader(GRUB) and microcode updates
 **** Run
 #+BEGIN_SRC shell :tangle run_in_system.sh
