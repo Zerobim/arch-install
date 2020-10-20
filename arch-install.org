@@ -256,12 +256,12 @@ pacstrap "$system_mp" $pacstrap_pkgs
    is based on sync status and speed. This file will be copied
    to the system.
 2. Install required packages with ~pacstrap~.
-   - ~pacstrap /mnt <package1> <package2>…~
+   - ~pacstrap "$system_mp" <package1> <package2>…~
    - Required packages: ~base linux linux-firmware~
    - Recommended packages: ~man-db man-pages texinfo~
 
 Use ~pacstrap~ to install packages from the live system. Alternatively use ~pacman~
-while chrooted( use ~arch-chroot /mnt~ ).
+while chrooted( use ~arch-chroot "$system_mp"~ ).
 
 To Consider:
 - Userspace utilities for the management of file systems that will be
@@ -276,7 +276,7 @@ To Consider:
 **** Run
 #+BEGIN_SRC shell :tangle run_in_live.sh
 # Generate fstab from live environment
-genfstab -U /mnt >> /mnt/etc/fstab
+genfstab -U "$system_mp" >> "$system_mp"/etc/fstab
 #+END_SRC
 
 **** Explanation
@@ -286,16 +286,16 @@ Generate fstab file and put it in place for the new system.
 **** Run
 #+BEGIN_SRC shell :tangle run_in_live.sh
 # Copy script to new system
-cp custom.sh run_in_system.sh /mnt/
+cp custom.sh run_in_system.sh "$system_mp"/
 # Copies default overrides
 [ -r "$custom_override_file" ] && \
-    cp "$custom_override_file" /mnt/ || \
+    cp "$custom_override_file" "$system_mp"/ || \
     echo 'No override of custom values'
 
 echo 'Done with live system, entering the new system'
 
 # Enter system and run script
-arch-chroot /mnt /run_in_system.sh
+arch-chroot "$system_mp" /run_in_system.sh
 #+END_SRC
 
 **** Explanation
@@ -457,7 +457,7 @@ you will have to configure your connection by hand each time.
 **** Run
 #+BEGIN_SRC shell :tangle custom.sh
 # New user info
-new_user_name='daniel'
+new_user_name='john'
 new_user_password='1234'
 #+END_SRC
 

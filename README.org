@@ -48,10 +48,13 @@ install the system.
 For things that might be done in the future, search for ~TODO~.
 
 Currently working in:
-- [X] Create a non root user.
+- [-] Create a non root user.
+  + [X] Create a new user.
+  + [ ] Test user is created after reboot
 - [-] Allow to override values from ~custom.sh~
   + [X] Source ~override_custom.sh~ at the end of ~custom.sh~
-  + [ ] Tested
+  + [X] Copy ~override_custom.sh~ from live to the system
+  + [ ] Tested changing user name
 - [-] Cabled internet works after reboot
   + [X] Install dhcp client
   + [ ] Tested
