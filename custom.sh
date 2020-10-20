@@ -87,6 +87,25 @@ user_pkgs="$user_pkgs bash-completion"
 # Sudo
 user_pkgs="$user_pkgs sudo"
 
+# Xorg
+user_pkgs="$user_pkgs xorg"
+
+# Graphics driver Nvidia driver from official repos. Only used if the card is
+# from nvidia.
+nvidia_driver='nvidia'
+
+# Fallback terminal
+user_pkgs="$user_pkgs xterm"
+
+# I3-wm
+user_pkgs="$user_pkgs i3-wm i3blocks i3status"
+
+# Display manager
+user_pkgs="$user_pkgs lightdm lightdm-gtk-greeter"
+
+# File finder
+user_pkgs="$user_pkgs mlocate"
+
 # Override defaults here
 [ -r ./"$custom_override_file" ] && \
     . ./"$custom_override_file" || \

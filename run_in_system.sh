@@ -54,6 +54,29 @@ useradd -m "$new_user_name"
 printf '%s:%s\n' "$new_user_name" "$new_user_password" |\
     chpasswd
 
+get_graphics_driver_pkgs(){
+    graphics_card=$(lspci | grep -e VGA -e 2D -e 3D)
+
+    $(echo "$graphics_card" | grep -q -e 'Intel') && \
+        printf 'xf86-video-intel '
+
+    $(echo "$graphics_card" | grep -q -e 'NVIDIA') && \
+        printf "$nvidia_driver "
+
+    # !!!!!! Not tested!!!!
+    $(echo "$graphics_card" | grep -q -e 'ATI') && \
+        printf 'xf86-video-ati '
+
+    # !!!!!! Not tested!!!!
+    $(echo "$graphics_card" | grep -q -e 'AMD') && \
+        printf 'xf86-video-amdgpu '
+}
+
+# Add graphics driver
+graphics_driver=$(get_graphics_driver_pkgs)
+user_pkgs="$user_pkgs $graphics_driver"
+
+# Install packages
 pacman -Syu --noconfirm $user_pkgs
 
 ### Sudo config ###
@@ -69,7 +92,11 @@ groupadd sudo
 # Adding user to sudo group
 usermod -aG sudo "$new_user_name"
 
+### Removing beeping ###
+echo 'blacklist pcspkr' >> /etc/modprobe.d/nobeep.conf
+
 systemctl enable NetworkManager
+systemctl enable lightdm
 
 # MBR/GPT only
 grub-install --target=i386-pc "$system_device"

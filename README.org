@@ -52,11 +52,11 @@ Currently working in:
 - [X] Create a non root user.
   + [X] Create a new user.
   + [X] Test user is created after reboot
-- [-] Allow to override values from ~custom.sh~
+- [X] Allow to override values from ~custom.sh~
   + [X] Source ~override_custom.sh~ at the end of ~custom.sh~
   + [X] Copy ~override_custom.sh~ from live to the system
   + [X] Tested changing user name on script
-  + [ ] Test user name is different after reboot
+  + [X] Test user name is different after reboot
 - [X] Cabled internet works after reboot
   + [X] Install dhcp client
   + [X] Test ping archlinux.org
