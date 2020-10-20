@@ -420,7 +420,6 @@ Complete the rest of sections, exit chroot and reboot. Optionally
 manually unmount everything to detect problems. Remember to remove
 installation media.
 
-**** TODO Secure password
 
 *** Basic network
 **** Set host name
@@ -461,7 +460,9 @@ Create hosts file and fill it.
 
 Substitute ~127.0.1.1~ with the hosts permanent IP if it has one.
 
-**** TODO install at least a dhcp client
+**** NOTE
+No networking software is installed here, so either configure ~systemd~ or
+you will have to configure your connection by hand each time.
 
 *** Create unprivileged user
 **** Run
@@ -481,6 +482,8 @@ printf '%s:%s\n' "$new_user_name" "$new_user_password" |\
 #+END_SRC
 
 **** Explanation
+Create a regular user with less privileges for regular use.
+
 ** System customization
 *** Install packages
 **** Run
@@ -597,7 +600,3 @@ For LVM, system encryption or RAID, modify ~/etc/mkinitcpio.conf~ and recreate t
 **** Explanation
 Override the default values in your own file (~custom_override.sh~).
 
-** Post reboot
-*** TODO check ucode installed properly
-*** Network
-**** TODO Complete the rest of the network configuration.

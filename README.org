@@ -50,10 +50,17 @@ For things that might be done in the future, search for ~TODO~.
 Currently working in:
 - [X] Create a non root user.
 - [X] Allow overrides on custom file
-- [X] Install dhcp client before first reboot
-- [ ] TAB completion for bash
+- [-] Cabled internet works after reboot
+  + [X] Install dhcp client
+  + [ ] Tested
+- [ ] TAB completion for bash works
+  + [ ] Install TAB completion
+  + [ ] Tested
 - [ ] Finish a desktop environment installation
-  + [ ] Add groups to created user
+  + [ ] Sudo is usable after reboot for unprivileged user
+    - [ ] Install sudo
+    - [ ] Add user to sudoers
+    - [ ] Tested after reboot
   + [ ] Install Xorg
   + [ ] Install Intel/nvidia drivers
   + [ ] Install DE / WM
@@ -64,13 +71,13 @@ Currently working in:
     - [ ] In Xorg
   + [ ] Install ~mlocate~
   + [ ] Install CUPS
+- [ ] Everything is tested
 
-- [ ] Configure extra software
-  + [ ] Fonts
-  + [ ] ZSH
-
-- [ ] Test everything
-
+- Must do
+  + [ ] Wireless network connection
+  + [ ] Check micro-code installed properly after first reboot
+  + [ ] Store password in encrypted format
+   
 - Maybe later
   + [ ] ACPI events
   + [ ] CPU frequency scaling
@@ -79,7 +86,9 @@ Currently working in:
   + [ ] DNSSec enabled resolver
   + [ ] Firewall
   + [ ] Install Touchpad drivers
-  + [ ] Wireless network connection
   + [ ] Separate configuration files
     - [ ] For packages
     - [ ] For live / system
+  + [ ] Configure extra software
+    - [ ] Fonts
+    - [ ] ZSH
