@@ -84,7 +84,7 @@ pacman -Syu --noconfirm $user_pkgs
 
 ### Sudo config ###
 # Adding sudo group config
-echo "Members of group sudo can execute anything with their password" >/etc/sudoers.d/20_sudo_group
+echo "# Members of group sudo can execute anything with their password" >/etc/sudoers.d/20_sudo_group
 echo "%sudo	ALL=(ALL) ALL" >>/etc/sudoers.d/20_sudo_group
 # Fixing permissions
 chmod 440 /etc/sudoers.d/20_sudo_group

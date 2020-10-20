@@ -70,23 +70,23 @@ Currently working in:
     - [X] Add user to ~sudo~ group
     - [X] Test user can ~sudo -l~
     - [X] Test user can ~sudo cat /etc/sudoers~.
-  + [-] Remove beeping
+  + [X] Remove beeping
     - [X] Dont load ~pcspkr~ kernel module
-    - [ ] Test pressing left when logged in
-  + [-] Install Xorg
+    - [X] Test pressing left when logged in
+  + [X] Install Xorg
     - [X] Add package to the install list
-    - [ ] Tested running i3
-  + [-] Install Intel/nvidia drivers
+    - [X] Tested running i3
+  + [X] Install Intel/nvidia drivers
     - [X] Detect which one should be installed
     - [X] Add package to list
-    - [ ] Test they are added to the package list
-  + [-] Install DE / WM
+    - [X] Test they are added to the package list
+  + [X] Install DE / WM
     - [X] Install i3-wm, i3blocks, i3status
     - [X] Install xterm as fallback terminal
-    - [ ] Test it starts after installing xinit
-  + [-] Install a display manager
+    - [X] Test it starts after installing xinit
+  + [X] Install a display manager
     - [X] Install lightdm with the default theme
-    - [ ] Test can choose i3 session
+    - [X] Test can choose i3 session
   + [ ] Install and configure ~xdg-user-dirs~
   + [ ] Install pulseaudio
   + [ ] Configure keyboard layout
