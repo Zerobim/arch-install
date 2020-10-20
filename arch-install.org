@@ -606,7 +606,10 @@ For LVM, system encryption or RAID, modify ~/etc/mkinitcpio.conf~ and recreate t
 **** Run
 #+BEGIN_SRC shell :tangle custom.sh
 # Override defaults here
-. ./"$custom_override_file"
+[ -r ./"$custom_override_file" ] && \
+    . ./"$custom_override_file" || \
+    echo "Didn't find customization file $custom_override_file"
+
 #+END_SRC
 
 **** Explanation
