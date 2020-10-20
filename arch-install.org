@@ -500,6 +500,9 @@ user_pkgs="$user_pkgs bash-completion"
 # Sudo
 user_pkgs="$user_pkgs sudo"
 
+# Xorg
+user_pkgs="$user_pkgs xorg"
+
 #+END_SRC
 
 #+BEGIN_SRC shell :tangle run_in_system.sh
