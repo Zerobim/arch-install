@@ -68,6 +68,9 @@ Currently working in:
     - [X] Configure ~sudo~ group as run with password
     - [X] Add user to ~sudo~ group
     - [ ] Test that user can use sudo with password
+  + [ ] Remove beeping
+    - [ ] Dont load ~pcspkr~ kernel module
+    - [ ] Test pressing left when logged in
   + [ ] Install Xorg
   + [ ] Install Intel/nvidia drivers
   + [ ] Install DE / WM
