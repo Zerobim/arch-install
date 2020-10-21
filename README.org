@@ -87,13 +87,47 @@ Currently working in:
   + [X] Install a display manager
     - [X] Install lightdm with the default theme
     - [X] Test can choose i3 session
-  + [ ] Install and configure ~xdg-user-dirs~
-  + [ ] Install pulseaudio
-  + [ ] Configure keyboard layout
-    - [ ] In console. Already DONE?
-    - [ ] In Xorg
+  + [-] Install ~xdg-user-dirs~
+    - [X] Install package
+    - [ ] Test directories are there after reboot
+  + [-] Install web browser
+    - [X] Install firefox
+    - [ ] Test navigate to ~wiki.archlinux.org~
+  + [-] Make sound work
+    - [X] Install ~pulseaudio~
+    - [X] Install fronted GUI (~pavucontrol~)
+    - [X] Install fronted TUI (~pulsemixer~)
+    - [ ] Test audio works in firefox with jack
+    - [ ] Test gui
+    - [ ] Test tui
+  + [-] Configure X keyboard layout
+    - [X] Set layout to es
+    - [ ] Test writing on terminal
   + [X] Install ~mlocate~
-  + [ ] Install CUPS
+  + [-] Install notification daemon
+    - [X] dunst
+    - [ ] Test network connected notification appears after boot
+    - [ ] Test send notification with dunstify
+    - [ ] Test send notification with notify-send
+  + [-] Install CUPS
+    - [X] Install ~cups~ and ~ghostscript~.
+    - [ ] Test web interface is accesible ~localhost:631~ with root user login.
+    - [ ] Test add printer and print test page
+  + [ ] Configure session locking
+    - [ ] Configure inactivity lock for 1 min
+    - [ ] Configure manual lock
+    - [ ] Test manual lock
+    - [ ] Test inactivity lock for 1 min
+    - [ ] Set inactivity lock to 5 min
+  + [ ] Configure screen shutdown on inactivity
+    - [ ] Configure inactivity period of 1 min
+    - [ ] Configure inactivity to after screen lock
+    - [ ] Configure manual shutdown
+    - [ ] Test manual shutdown
+    - [ ] Test inactivity for 1 min
+    - [ ] Test inactivity for after screen lock
+  + [ ] Configure basic environment variables
+    - [ ] PATH includes ~$HOME/.local/bin~.
 - [ ] Everything is tested
 
 - Must do
@@ -146,3 +180,4 @@ Currently working in:
   + [ ] Check / Install picom
   + [ ] Check rest of Xorg page
   + [ ] Check I3 tips and tricks
+  + [ ] Parameterize X keyboard configuration

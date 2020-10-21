@@ -98,8 +98,25 @@ usermod -aG sudo "$new_user_name"
 ### Removing beeping ###
 echo 'blacklist pcspkr' >> /etc/modprobe.d/nobeep.conf
 
+### Configuring Xorg keyboard ###
+
+cat <<EOF > /etc/X11/xorg.conf.d/00-keyboard.conf
+# Created by install script on $(date)
+Section "InputClass"
+        Identifier "system-keyboard"
+        MatchIsKeyboard "on"
+        Option "XkbLayout" "es"
+        Option "XkbModel" "pc104"
+        Option "XkbOptions" "caps:ctrl_modifier,terminate:ctrl_alt_bksp"
+EndSection
+EOF
+
+### Configuring dunst ###
+# Nothing here
+
 systemctl enable NetworkManager
 systemctl enable lightdm
+systemctl enable org.cups.cupsd.service
 
 # MBR/GPT only
 grub-install --target=i386-pc "$system_device"

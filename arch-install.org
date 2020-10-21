@@ -516,8 +516,20 @@ user_pkgs="$user_pkgs i3-wm i3blocks i3status"
 # Display manager
 user_pkgs="$user_pkgs lightdm lightdm-gtk-greeter"
 
+# Sound server
+user_pkgs="$user_pkgs pulseaudio pulseaudio-alsa pavucontrol pulsemixer"
+
+# Web browser
+user_pkgs="$user_pkgs firefox"
+
+# Notification daemon
+user_pkgs="$user_pkgs libnotify dunst"
+
 # File finder
 user_pkgs="$user_pkgs mlocate"
+
+# Printing service
+user_pkgs="$user_pkgs cups cups-pdf ghostscript"
 
 #+END_SRC
 
@@ -590,16 +602,54 @@ echo 'blacklist pcspkr' >> /etc/modprobe.d/nobeep.conf
 ***** Explanation
 The module ~pcspkr~ is the one that makes the computer beep when there is an
 error, I find this extremely annoying.
+**** Xorg keyboard
+***** Run
+#+BEGIN_SRC shell :tangle run_in_system.sh
+### Configuring Xorg keyboard ###
+
+cat <<EOF > /etc/X11/xorg.conf.d/00-keyboard.conf
+# Created by install script on $(date)
+Section "InputClass"
+        Identifier "system-keyboard"
+        MatchIsKeyboard "on"
+        Option "XkbLayout" "es"
+        Option "XkbModel" "pc104"
+        Option "XkbOptions" "caps:ctrl_modifier,terminate:ctrl_alt_bksp"
+EndSection
+EOF
+
+#+END_SRC
+
+***** Explanation
+Enable options to terminate Xorg with ~Ctrl+Alt+BAKSP~. Also to use ~Block Mayus~ as
+~Ctrl~.
+
+The ~XkbModel~ might require changes or could be improved.
+
+**** Dunst
+***** Run
+#+BEGIN_SRC shell :tangle run_in_system.sh
+### Configuring dunst ###
+# Nothing here
+
+#+END_SRC
+***** Explanation
+Since it has to be started on startup, it may require launching it manually and
+stopping currently running notification daemons.
 
 *** Enable services
 **** Run
 #+BEGIN_SRC shell :tangle run_in_system.sh
 systemctl enable NetworkManager
 systemctl enable lightdm
+systemctl enable org.cups.cupsd.service
 #+END_SRC
 
 **** Explanation
 Enable required services here.
+
+***** Cups
+Enabling socket does not enable the web interface.
 
 *** Setup boot loader(GRUB) and microcode updates
 **** Run

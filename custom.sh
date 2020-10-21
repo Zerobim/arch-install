@@ -103,8 +103,20 @@ user_pkgs="$user_pkgs i3-wm i3blocks i3status"
 # Display manager
 user_pkgs="$user_pkgs lightdm lightdm-gtk-greeter"
 
+# Sound server
+user_pkgs="$user_pkgs pulseaudio pulseaudio-alsa pavucontrol pulsemixer"
+
+# Web browser
+user_pkgs="$user_pkgs firefox"
+
+# Notification daemon
+user_pkgs="$user_pkgs libnotify dunst"
+
 # File finder
 user_pkgs="$user_pkgs mlocate"
+
+# Printing service
+user_pkgs="$user_pkgs cups cups-pdf ghostscript"
 
 # Override defaults here
 [ -r ./"$custom_override_file" ] && \
