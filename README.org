@@ -44,6 +44,13 @@ install the system.
      displayed.
   4. Check everything is correct and ~reboot~. The system should work.
 
+Alternatively, run:
+#+BEGIN_SRC shell
+curl 'https://raw.githubusercontent.com/Zerobim/arch-install/dev/install.sh' | bash
+#+END_SRC
+
+Note: ~loadkeys~ may be useful to set keyboard layout.
+
 * Tasks
 ** Next
 - [X] Tested ~set~ works.
