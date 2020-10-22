@@ -44,9 +44,14 @@ install the system.
      displayed.
   4. Check everything is correct and ~reboot~. The system should work.
 
-Alternatively, run:
+Alternatively, run the following on the arch live system:
+
 #+BEGIN_SRC shell
-curl 'https://raw.githubusercontent.com/Zerobim/arch-install/dev/install.sh' | bash
+pacman -Sy --noconfirm git
+git clone 'https://github.com/Zerobim/arch-install.git'
+cd arch-install
+# git checkout dev
+./install.sh
 #+END_SRC
 
 Note: ~loadkeys~ may be useful to set keyboard layout.
