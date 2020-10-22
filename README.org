@@ -124,6 +124,7 @@ install the system.
   + [-] Configure basic environment variables
     - [X] Add them to .pam_environment
     - [ ] Test they show in bash
+- [X] Add installation of git to install.sh
 
 ** To do
   + [ ] Install and set default terminal
