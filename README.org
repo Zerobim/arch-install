@@ -97,7 +97,7 @@ Currently working in:
     - [X] Install ~pulseaudio~
     - [X] Install fronted GUI (~pavucontrol~)
     - [X] Install fronted TUI (~pulsemixer~)
-    - [ ] Test audio works in firefox with jack
+    - [ ] Test audio works in firefox with jack after unmuting
     - [ ] Test gui
     - [ ] Test tui
   + [-] Configure X keyboard layout
