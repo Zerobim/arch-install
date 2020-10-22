@@ -44,10 +44,8 @@ install the system.
      displayed.
   4. Check everything is correct and ~reboot~. The system should work.
 
-* Next
-For things that might be done in the future, search for ~TODO~.
-
-Currently working in:
+* Tasks
+** Next
 - [X] Tested ~set~ works.
 - [X] Create a non root user.
   + [X] Create a new user.
@@ -81,7 +79,7 @@ Currently working in:
     - [X] Add package to list
     - [X] Test they are added to the package list
   + [X] Install DE / WM
-    - [X] Install i3-wm, i3blocks, i3status
+    - [X] Install i3-wm, i3blocks, i3status, i3lock
     - [X] Install xterm as fallback terminal
     - [X] Test it starts after installing xinit
   + [X] Install a display manager
@@ -113,24 +111,21 @@ Currently working in:
     - [X] Install ~cups~ and ~ghostscript~.
     - [ ] Test web interface is accesible ~localhost:631~ with root user login.
     - [ ] Test add printer and print test page
-  + [ ] Configure session locking
-    - [ ] Configure inactivity lock for 1 min
-    - [ ] Configure manual lock
-    - [ ] Test manual lock
-    - [ ] Test inactivity lock for 1 min
-    - [ ] Set inactivity lock to 5 min
-  + [ ] Configure screen shutdown on inactivity
-    - [ ] Configure inactivity period of 1 min
-    - [ ] Configure inactivity to after screen lock
-    - [ ] Configure manual shutdown
-    - [ ] Test manual shutdown
-    - [ ] Test inactivity for 1 min
-    - [ ] Test inactivity for after screen lock
-  + [ ] Configure basic environment variables
-    - [ ] PATH includes ~$HOME/.local/bin~.
-- [ ] Everything is tested
+  + [-] Configure DPMS & session locking
+    - [X] Configure Standby time
+    - [X] Configure Suspend time
+    - [X] Configure Off time
+    - [X] Configure Screensaver time
+    - [X] Configure inactivity lock for before screen turns off
+    - [ ] Test manual lock with ~loginctl lock-session~.
+    - [ ] Test inactivity lock
+    - [ ] Test system is locked after screensaver
+    - [ ] Test system is locked after suspend
+  + [-] Configure basic environment variables
+    - [X] Add them to .pam_environment
+    - [ ] Test they show in bash
 
-- Must do
+** To do
   + [ ] Install and set default terminal
     - [ ] Install alacritty
     - [ ] Install xterm as fallback
@@ -149,9 +144,14 @@ Currently working in:
     - [ ] I3blocks
     - [ ] Alacritty
   + [ ] Configure lightdm to work with webkit-theme-litarvan
+  + [ ] Make script for laptops to dim screen with xbacklight
+  + [ ] Install unclutter
+  + [ ] Configure xcape for capsLock = Escape
+  + [ ] Add remainder to manually configure DPMS times
+  + [ ] Make screen dimming work with a timer or DPMS
+  + [ ] Add remainder to use the default i3 config or accept creating a new one
 
-
-- Maybe later
+** Maybe
   + [ ] ACPI events
   + [ ] CPU frequency scaling
   + [ ] Laptops

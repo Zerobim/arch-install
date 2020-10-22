@@ -510,7 +510,7 @@ nvidia_driver='nvidia'
 user_pkgs="$user_pkgs xterm"
 
 # I3-wm
-user_pkgs="$user_pkgs i3-wm i3blocks i3status"
+user_pkgs="$user_pkgs i3-wm i3blocks i3status i3lock"
 
 # Display manager
 user_pkgs="$user_pkgs lightdm lightdm-gtk-greeter"
@@ -624,6 +624,64 @@ Enable options to terminate Xorg with ~Ctrl+Alt+BAKSP~. Also to use ~Block Mayus
 ~Ctrl~.
 
 The ~XkbModel~ might require changes or could be improved.
+
+*** Xorg DPMS
+**** Run
+#+BEGIN_SRC shell :tangle run_in_system.sh
+### Xorg DPMS ###
+
+cat <<EOF > /etc/X11/xorg.conf.d/10-dpms.conf
+# Created by install script on $(date)
+Section "ServerClass"
+        Option "BlankTime" "1"
+        Option "StandByTime" "0"
+        Option "SuspendTime" "0"
+        Option "OffTime" "2"
+EndSection
+EOF
+
+#+END_SRC
+
+**** Explanation
+My VGA screen does the
+same for every timer, shuts down and launches the screen locker, so if
+the hardware supports it, you can configure the DPMS times in
+~/etc/X11/xorg.conf.d/10-dpms.conf~.
+
+- ~BlankTime~: Inactivity until locking or screen saver.
+- ~StandbyTime~: Total inactivity until reducing power.
+- ~SuspendTime~: Total Inactivity until suspending screen.
+- ~OffTime~: Total Inactivity until screen powers off.
+
+*** Environment variables
+**** Run
+#+BEGIN_SRC shell :tangle run_in_system.sh
+### Environment variables ###
+
+cat <<EOF > "$HOME"/.pam_environment
+# Created by install script on $(date)
+# Environment variables here
+# Login to reload
+# XDG spec
+PATH             DEFAULT="@{HOME}/.local/bin" OVERRIDE="${PATH}:@{HOME}/.local/bin"
+MANPATH          DEFAULT="/usr/local/man"
+XDG_CONFIG_HOME  DEFAULT="@{HOME}/.config"
+XDG_CACHE_HOME   DEFAULT="@{HOME}/.cache"
+XDG_DATA_HOME    DEFAULT="@{HOME}/.local/share"
+# Using XDG
+LESSKEY       DEFAULT="${XDG_CONFIG_HOME}/less/lesskey"
+MYVIMRC       DEFAULT="${XDG_CONFIG_HOME}/vim/vimrc"
+INPUTRC       DEFAULT="${XDG_CONFIG_HOME}/bash/inputrc"
+HISTFILE      DEFAULT="${XDG_CACHE_HOME}/bash/bash_history"
+LESSHISTFILE  DEFAULT="${XDG_CACHE_HOME}/less/lesshist"
+# Other
+HISTCONTROL  DEFAULT="ignoreboth:erasedups"
+VIMINIT      DEFAULT="source \$MYVIMRC"
+EDITOR       DEFAULT="vim"
+
+#+END_SRC
+
+**** Explanation
 
 *** Dunst
 **** Run

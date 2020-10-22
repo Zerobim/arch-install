@@ -98,7 +98,7 @@ nvidia_driver='nvidia'
 user_pkgs="$user_pkgs xterm"
 
 # I3-wm
-user_pkgs="$user_pkgs i3-wm i3blocks i3status"
+user_pkgs="$user_pkgs i3-wm i3blocks i3status i3lock"
 
 # Display manager
 user_pkgs="$user_pkgs lightdm lightdm-gtk-greeter"

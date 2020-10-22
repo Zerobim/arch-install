@@ -111,6 +111,41 @@ Section "InputClass"
 EndSection
 EOF
 
+### Xorg DPMS ###
+
+cat <<EOF > /etc/X11/xorg.conf.d/10-dpms.conf
+# Created by install script on $(date)
+Section "ServerClass"
+        Option "BlankTime" "1"
+        Option "StandByTime" "0"
+        Option "SuspendTime" "0"
+        Option "OffTime" "2"
+EndSection
+EOF
+
+### Environment variables ###
+
+cat <<EOF > "$HOME"/.pam_environment
+# Created by install script on $(date)
+# Environment variables here
+# Login to reload
+# XDG spec
+PATH             DEFAULT="@{HOME}/.local/bin" OVERRIDE="${PATH}:@{HOME}/.local/bin"
+MANPATH          DEFAULT="/usr/local/man"
+XDG_CONFIG_HOME  DEFAULT="@{HOME}/.config"
+XDG_CACHE_HOME   DEFAULT="@{HOME}/.cache"
+XDG_DATA_HOME    DEFAULT="@{HOME}/.local/share"
+# Using XDG
+LESSKEY       DEFAULT="${XDG_CONFIG_HOME}/less/lesskey"
+MYVIMRC       DEFAULT="${XDG_CONFIG_HOME}/vim/vimrc"
+INPUTRC       DEFAULT="${XDG_CONFIG_HOME}/bash/inputrc"
+HISTFILE      DEFAULT="${XDG_CACHE_HOME}/bash/bash_history"
+LESSHISTFILE  DEFAULT="${XDG_CACHE_HOME}/less/lesshist"
+# Other
+HISTCONTROL  DEFAULT="ignoreboth:erasedups"
+VIMINIT      DEFAULT="source \$MYVIMRC"
+EDITOR       DEFAULT="vim"
+
 ### Configuring dunst ###
 # Nothing here
 
