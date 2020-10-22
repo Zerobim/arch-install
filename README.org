@@ -26,8 +26,8 @@ install the system.
 
 - ~custom.sh~: Configuration / customization of the changeable values. You should
   define the environment you want with these.
-- ~install.sh~: Launch script. Redirects ~stderr~ and ~stdout~ to be able to access
-  the information in case of an error.
+- ~install.sh~: Launch script. Redirects ~stderr~ and ~stdout~ to be able to log the
+  information.
 - ~run_in_{live,system}.sh~: Code to run in the live system or the installed
   system.
 
