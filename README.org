@@ -88,41 +88,46 @@ install the system.
   + [-] Install ~xdg-user-dirs~
     - [X] Install package
     - [ ] Test directories are there after reboot
-  + [-] Install web browser
+  + [X] Install web browser
     - [X] Install firefox
-    - [ ] Test navigate to ~wiki.archlinux.org~
-  + [-] Make sound work
+    - [X] Test navigate to ~wiki.archlinux.org~
+  + [X] Make sound work
     - [X] Install ~pulseaudio~
     - [X] Install fronted GUI (~pavucontrol~)
     - [X] Install fronted TUI (~pulsemixer~)
-    - [ ] Test audio works in firefox with jack after unmuting
-    - [ ] Test gui
-    - [ ] Test tui
-  + [-] Configure X keyboard layout
+    - [X] Test audio works in firefox with jack after unmuting
+    - [X] Test gui (~pavucontrol~). Sound when changing volume.
+    - [X] Test tui(~pulsemixer~). Changes sound properly.
+  + [X] Configure X keyboard layout
     - [X] Set layout to es
-    - [ ] Test writing on terminal
+    - [X] Enable killing Xorg with C-M-BKSP
+    - [X] Enable CAPSLOCK = CTRL
+    - [X] Test writing on terminal
+    - [X] Test killing Xorg with C-M-BKSP
+    - [X] Test CAPSLOCK = CTRL
   + [X] Install ~mlocate~
-  + [-] Install notification daemon
+  + [X] Install notification daemon
     - [X] dunst
-    - [ ] Test network connected notification appears after boot
-    - [ ] Test send notification with dunstify
-    - [ ] Test send notification with notify-send
+    - [X] Test network connected notification appears after boot
+    - [X] Test send notification with dunstify
+    - [X] Test send notification with notify-send
   + [-] Install CUPS
     - [X] Install ~cups~ and ~ghostscript~.
     - [ ] Test web interface is accesible ~localhost:631~ with root user login.
     - [ ] Test add printer and print test page
-  + [-] Configure DPMS & session locking
+  + [X] Configure DPMS & session locking
+    - [X] Lock session with xss-lock & i3lock
     - [X] Configure Standby time
     - [X] Configure Suspend time
     - [X] Configure Off time
     - [X] Configure Screensaver time
     - [X] Configure inactivity lock for before screen turns off
-    - [ ] Test manual lock with ~loginctl lock-session~.
-    - [ ] Test inactivity lock
-    - [ ] Test system is locked after screensaver
-    - [ ] Test system is locked after suspend
+    - [X] Test manual lock with ~loginctl lock-session~.
+    - [X] Test inactivity lock
+    - [X] Test system is locked after screensaver
+    - [X] Test system is locked after suspend
   + [-] Configure basic environment variables
-    - [X] Add them to .pam_environment
+    - [X] Add them to ~/etc/environment~
     - [ ] Test they show in bash
 - [X] Add installation of git to install.sh
 

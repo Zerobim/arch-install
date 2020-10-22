@@ -515,7 +515,7 @@ nvidia_driver='nvidia'
 user_pkgs="$user_pkgs xterm"
 
 # I3-wm
-user_pkgs="$user_pkgs i3-wm i3blocks i3status i3lock"
+user_pkgs="$user_pkgs i3-wm i3blocks i3status i3lock xss-lock"
 
 # Display manager
 user_pkgs="$user_pkgs lightdm lightdm-gtk-greeter"
@@ -531,6 +531,9 @@ user_pkgs="$user_pkgs libnotify dunst"
 
 # File finder
 user_pkgs="$user_pkgs mlocate"
+
+# XDG directories
+user_pkgs="$user_pkgs xdg-user-dirs"
 
 # Printing service
 user_pkgs="$user_pkgs cups cups-pdf ghostscript"
@@ -574,7 +577,7 @@ pacman -Syu --noconfirm $user_pkgs
 *** Explanation
 Install all the packages you want in the system. Add them to ~$user_pkgs~.
 
-** Configure new software
+** Configure new *system*
 *** Sudo
 **** Run
 #+BEGIN_SRC shell :tangle run_in_system.sh
@@ -638,10 +641,10 @@ The ~XkbModel~ might require changes or could be improved.
 cat <<EOF > /etc/X11/xorg.conf.d/10-dpms.conf
 # Created by install script on $(date)
 Section "ServerFlags"
-        Option "BlankTime" "1"
+        Option "BlankTime" "10"
         Option "StandByTime" "0"
         Option "SuspendTime" "0"
-        Option "OffTime" "2"
+        Option "OffTime" "11"
 EndSection
 EOF
 
@@ -679,12 +682,11 @@ HISTFILE      DEFAULT="${XDG_CACHE_HOME}/bash/bash_history"
 LESSHISTFILE  DEFAULT="${XDG_CACHE_HOME}/less/lesshist"
 # Other
 HISTCONTROL  DEFAULT="ignoreboth:erasedups"
-EDITOR       DEFAULT="vim"' >"$HOME"/.pam_environment
+EDITOR       DEFAULT="vim"' >>/etc/.pam_environment
 
 #+END_SRC
 
 **** Explanation
-
 *** Dunst
 **** Run
 #+BEGIN_SRC shell :tangle run_in_system.sh
@@ -701,6 +703,7 @@ stopping currently running notification daemons.
 #+BEGIN_SRC shell :tangle run_in_system.sh
 systemctl enable NetworkManager
 systemctl enable lightdm
+systemctl disable org.cups.cupsd.socket
 systemctl enable org.cups.cupsd.service
 #+END_SRC
 

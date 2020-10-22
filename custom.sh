@@ -98,7 +98,7 @@ nvidia_driver='nvidia'
 user_pkgs="$user_pkgs xterm"
 
 # I3-wm
-user_pkgs="$user_pkgs i3-wm i3blocks i3status i3lock"
+user_pkgs="$user_pkgs i3-wm i3blocks i3status i3lock xss-lock"
 
 # Display manager
 user_pkgs="$user_pkgs lightdm lightdm-gtk-greeter"
@@ -114,6 +114,9 @@ user_pkgs="$user_pkgs libnotify dunst"
 
 # File finder
 user_pkgs="$user_pkgs mlocate"
+
+# XDG directories
+user_pkgs="$user_pkgs xdg-user-dirs"
 
 # Printing service
 user_pkgs="$user_pkgs cups cups-pdf ghostscript"
