@@ -651,6 +651,10 @@ same for every timer, shuts down and launches the screen locker, so if
 the hardware supports it, you can configure the DPMS times in
 ~/etc/X11/xorg.conf.d/10-dpms.conf~.
 
+Note from arch wiki: /Note that DPMS was developed for CRT monitors, and on LCD
+displays, there is normally no difference between the standby, suspend and off
+modes/.
+
 - ~BlankTime~: Inactivity until locking or screen saver.
 - ~StandbyTime~: Total inactivity until reducing power.
 - ~SuspendTime~: Total Inactivity until suspending screen.
