@@ -1,5 +1,7 @@
 # Completed tasks and dates
 
+## 2020-20-22
+
 - [X] Tested `set` works.
 - [X] Create a non root user.
   - [X] Create a new user.
