@@ -84,7 +84,7 @@ The installer image should try to boot in EFI mode first. Maybe?.
 *** Run
 #+BEGIN_SRC shell :tangle run_in_live.sh
 # Connectivity check
-ping -c 1 archlinux.org && echo 'Internet works!!' || echo 'ERROR: Internet does not work!'
+ping -c 1 archlinux.org && echo 'Internet works!!'
 #+END_SRC
 *** Explanation
 Required to be able to download and install packages.
