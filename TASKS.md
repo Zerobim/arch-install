@@ -34,6 +34,7 @@
 - [ ] Configure basic environment variables
   - [ ] Test they show in bash
 - [ ] Use test function for boot mode detection
+- [ ] Enable ntp in system
 
 ## Maybe
 
