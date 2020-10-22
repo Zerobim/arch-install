@@ -21,7 +21,7 @@ boot_mode_is_uefi(){
 }
 
 # Connectivity check
-ping -c 1 archlinux.org && echo 'Internet works!!' || echo 'ERROR: Internet does not work!'
+ping -c 1 archlinux.org && echo 'Internet works!!'
 
 # Use timedatectl to ensure the system clock is accurate
 timedatectl set-ntp true
