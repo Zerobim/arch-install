@@ -33,6 +33,7 @@
 - [ ] Add remainder to use the default i3 config or accept creating a new one
 - [ ] Configure basic environment variables
   - [ ] Test they show in bash
+- [ ] Use test function for boot mode detection
 
 ## Maybe
 
