@@ -5,7 +5,7 @@
 ## To do
 
 - [ ] Test CUPS
-  - [ ] Test web interface is accesible ~localhost:631~ with root user login.
+  - [ ] Test web interface is accesible `localhost:631` with root user login.
   - [ ] Test add printer and print test page
 - [ ] Install and set default terminal
   - [ ] Install alacritty
@@ -13,9 +13,9 @@
   - [ ] Set $TERMINAL in pam
 - [ ] Check micro-code installed properly after first reboot
 - [ ] Store password in encrypted format
-- [ ] Rename ~custom.sh~ to ~defaults.sh~ and ~override_custom.sh~ to ~custom.sh~.
+- [ ] Rename `custom.sh` to `defaults.sh` and `override_custom.sh` to `custom.sh`.
 - [ ] Stop if network check fails
-- [ ] Allow to specify partitioning scheme file for ~sfdisk~.
+- [ ] Allow to specify partitioning scheme file for `sfdisk`.
 - [ ] Calculate Swap from RAM
 - [ ] Install fonts
   - [ ] awesome and fonts with ligatures
@@ -56,7 +56,7 @@
 - [ ] UEFI instructions for GRUB.
 - [ ] Check architecture for installing GRUB.
 - [ ] Change default time for GRUB.
-- [ ] Fill up explanation about ~hwclock~ properly.
+- [ ] Fill up explanation about `hwclock` properly.
   - [ ] Why is it needed.
 - [ ] Create non existing groups
 - [ ] Add user to group
