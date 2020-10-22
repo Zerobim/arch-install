@@ -123,26 +123,6 @@ Section "ServerFlags"
 EndSection
 EOF
 
-### Environment variables ###
-
-echo '# Created by install script on $(date)
-# Environment variables here
-# Login to reload
-# XDG spec
-PATH             DEFAULT="@{HOME}/.local/bin" OVERRIDE="${PATH}:@{HOME}/.local/bin"
-MANPATH          DEFAULT="/usr/local/man"
-XDG_CONFIG_HOME  DEFAULT="@{HOME}/.config"
-XDG_CACHE_HOME   DEFAULT="@{HOME}/.cache"
-XDG_DATA_HOME    DEFAULT="@{HOME}/.local/share"
-# Using XDG
-LESSKEY       DEFAULT="${XDG_CONFIG_HOME}/less/lesskey"
-INPUTRC       DEFAULT="${XDG_CONFIG_HOME}/bash/inputrc"
-HISTFILE      DEFAULT="${XDG_CACHE_HOME}/bash/bash_history"
-LESSHISTFILE  DEFAULT="${XDG_CACHE_HOME}/less/lesshist"
-# Other
-HISTCONTROL  DEFAULT="ignoreboth:erasedups"
-EDITOR       DEFAULT="vim"' >>/etc/environment
-
 ### Configuring dunst ###
 # Nothing here
 
