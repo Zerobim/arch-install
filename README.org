@@ -47,7 +47,7 @@ install the system.
 Alternatively, run the following on the arch live system:
 
 #+BEGIN_SRC shell
-pacman -Sy --noconfirm git
+pacman -Sy git
 git clone 'https://github.com/Zerobim/arch-install.git'
 cd arch-install
 # git checkout dev
@@ -97,9 +97,9 @@ Note: ~loadkeys~ may be useful to set keyboard layout.
   + [X] Install a display manager
     - [X] Install lightdm with the default theme
     - [X] Test can choose i3 session
-  + [-] Install ~xdg-user-dirs~
+  + [X] Install ~xdg-user-dirs~
     - [X] Install package
-    - [ ] Test directories are there after reboot
+    - [X] Test directories are there after reboot
   + [X] Install web browser
     - [X] Install firefox
     - [X] Test navigate to ~wiki.archlinux.org~
